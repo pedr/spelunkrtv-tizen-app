@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://spelunkr.local/SpelunkrTV" version="1.1.0" viewmodes="maximized">
+    <tizen:application id="SpelunkrTV.Spelunkr" package="SpelunkrTV" required_version="6.0"/>
+    <content src="index.html"/>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <icon src="icon.png"/>
+    <name>Spelunkr</name>
+    <tizen:profile name="tv"/>
+    <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="disable" encryption="disable" install-location="auto" hwkey-event="enable"/>
+    <access origin="*" subdomains="true"/>
+    <tizen:allow-navigation>spelunkr.tv *.spelunkr.tv</tizen:allow-navigation>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
+    <!-- Without this element the TV applies "script-src 'self'; style-src 'self'", which blocks the site's own inline and remote scripts. -->
+    <tizen:content-security-policy>default-src * 'self' data: blob: 'unsafe-inline' 'unsafe-eval'</tizen:content-security-policy>
+</widget>

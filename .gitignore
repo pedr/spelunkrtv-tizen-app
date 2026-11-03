@@ -1,0 +1,10 @@
+# Built packages (TV-Store signs them on the TV)
+dist/
+*.wgt
+spelunkr-tv.zip
+
+# Debug runtime files
+debug/logs.jsonl
+debug/cmd.js
+debug/.tv-token
+__pycache__/
