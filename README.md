@@ -14,7 +14,9 @@ Tested on a Samsung CU8000 50" (2023, Tizen 9.0, Chromium 120, user agent `SMART
 | `spelunkr-tv/boot.js` | Loads the site HTML and writes it into the app page, with the fix scripts first. |
 | `spelunkr-tv/tvfix.js` | Changes archive.org video URLs to the direct storage-server URL. This is the video fix. |
 | `spelunkr-tv/tvshell.js` | Makes the site work inside the app page: history paths, reload guard, remote keys. |
+| `scripts/build-wgt.sh` | Builds `dist/Spelunkr.wgt`. |
 | `scripts/check-site.mjs` | Checks from a PC that spelunkr.tv still behaves the way the app needs. |
+| `.github/workflows/release.yml` | Builds and publishes the package when you push a `v*` tag. |
 | `debug/` | Debug tools: inspector client, `sdb` client, log server and proxy, test scripts. |
 | `dist/` | Built `.wgt` packages (not in git). |
 
@@ -33,12 +35,24 @@ The app does not navigate to spelunkr.tv. After a navigation, the app cannot run
 A `.wgt` is a zip with `config.xml` at the root. You do not need Tizen Studio.
 
 ```sh
-cd spelunkr-tv
-mkdir -p ../dist
-zip -X -q ../dist/Spelunkr.wgt config.xml index.html style.css boot.js tvshell.js tvfix.js icon.png
+scripts/build-wgt.sh          # writes dist/Spelunkr.wgt from every file in spelunkr-tv/
 ```
 
+Put only app files in `spelunkr-tv/`, because the script packages the full folder.
+
 Increase `version` in `config.xml` for each new build.
+
+### Release
+
+1. Increase `version` in `spelunkr-tv/config.xml`, for example to `1.2.0`, and commit.
+2. Push a tag with the same version:
+
+   ```sh
+   git tag v1.2.0
+   git push origin v1.2.0
+   ```
+
+The `Release` workflow (`.github/workflows/release.yml`) stops if the tag and `version` are different. Otherwise it builds `Spelunkr.wgt` and publishes a GitHub Release with that file as the only asset. The Apps2Samsung community catalog downloads that asset, and its check refuses a release with more than one file.
 
 The TV installs only signed packages. Use one of these tools to sign and install:
 
